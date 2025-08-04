@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free Online Image Compressor Tool - Compress and optimize images with adjustable quality for fast web performance." />
+  <meta name="keywords" content="Image Compressor, Compress Images Online, Optimize Images, Reduce Image Size, Free Image Tool" />
+  <meta name="author" content="YourSiteName" />
+  <title>Online Image Compression Tool - Free & Fast</title>
+
+  <!-- Google AdSense Integration -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-XXXXXXXXXXXXXXX", // Replace with your AdSense ID
+      enable_page_level_ads: true
+    });
+  </script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f7fa;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #0066cc;
+      font-size: 2em;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    input[type="file"] {
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+    input[type="range"] {
+      width: 100%;
+    }
+    .output {
+      margin-top: 20px;
+    }
+    .download-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 15px;
+      background: #28a745;
+      color: #fff;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    .adsense {
+      margin: 30px 0;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5em; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Free Online Image Compressor</h1>
+    <p>Reduce image size while preserving quality. SEO & performance optimized.</p>
+  </header>
+
+  <div class="container">
+    <label for="imageInput">Choose an Image:</label>
+    <input type="file" id="imageInput" accept="image/*" />
+
+    <label for="qualityRange">Select Compression Level: <span id="qualityValue">70</span>%</label>
+    <input type="range" id="qualityRange" min="10" max="100" value="70" />
+
+    <button onclick="compressImage()">Compress Image</button>
+
+    <div class="output" id="outputSection" style="display:none;">
+      <p><strong>Compressed Image:</strong></p>
+      <img id="preview" alt="Compressed Preview" style="max-width:100%; height:auto;" />
+      <a id="downloadLink" class="download-link" download="compressed-image.jpg">Download Compressed Image</a>
+    </div>
+  </div>
+
+  <!-- AdSense Ad Block -->
+  <div class="adsense">
+    <!-- Replace with your ad code -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXX"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const qualityRange = document.getElementById('qualityRange');
+    const qualityValue = document.getElementById('qualityValue');
+    const preview = document.getElementById('preview');
+    const downloadLink = document.getElementById('downloadLink');
+    const outputSection = document.getElementById('outputSection');
+
+    qualityRange.oninput = function () {
+      qualityValue.textContent = this.value;
+    };
+
+    function compressImage() {
+      const file = imageInput.files[0];
+      if (!file) {
+        alert("Please select an image.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = function () {
+          const canvas = document.createElement('canvas');
+          const scale = 1;
+          canvas.width = img.width * scale;
+          canvas.height = img.height * scale;
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          const quality = qualityRange.value / 100;
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+
+          preview.src = compressedDataUrl;
+          downloadLink.href = compressedDataUrl;
+          outputSection.style.display = 'block';
+        };
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>
+
+</body>
+</html>
